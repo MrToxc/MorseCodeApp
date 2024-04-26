@@ -49,11 +49,17 @@ public class Translator {
         hashMap.put('9', List.of(MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.DOT));
     }
 
-    public ArrayList<MorseCodeSymbols> translate(String input) {
-        ArrayList<MorseCodeSymbols> result = new ArrayList<>();
-        char[] arrayInput = input.toCharArray();
-        //TBC
-
-        return result;
+    public ArrayList<MorseCodeSymbols> getArrRdy(String inputMessage) {
+        inputMessage = inputMessage.toLowerCase();
+        ArrayList<MorseCodeSymbols> arr = new ArrayList<>();
+        char[] arrayInput = inputMessage.toCharArray();
+        for (int i = 0; i < arrayInput.length; i++) {
+            for (MorseCodeSymbols currentSymbol : hashMap.get(arrayInput[i])) {
+                arr.add(currentSymbol);
+            }
+            arr.add(MorseCodeSymbols.SEPARATOR);
+        }
+        return arr;
     }
+
 }

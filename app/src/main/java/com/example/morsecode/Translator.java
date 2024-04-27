@@ -17,6 +17,8 @@ public class Translator {
         hashMap.put('f', List.of(MorseCodeSymbols.DOT, MorseCodeSymbols.DOT, MorseCodeSymbols.LINE, MorseCodeSymbols.DOT));
         hashMap.put('g', List.of(MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.DOT));
         hashMap.put('h', List.of(MorseCodeSymbols.DOT, MorseCodeSymbols.DOT, MorseCodeSymbols.DOT, MorseCodeSymbols.DOT));
+        // dollar sign is in place for czech letter CH
+        hashMap.put('$', List.of(MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.LINE));
         hashMap.put('i', List.of(MorseCodeSymbols.DOT, MorseCodeSymbols.DOT));
         hashMap.put('j', List.of(MorseCodeSymbols.DOT, MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.LINE));
         hashMap.put('k', List.of(MorseCodeSymbols.LINE, MorseCodeSymbols.DOT, MorseCodeSymbols.LINE));
@@ -47,6 +49,10 @@ public class Translator {
         hashMap.put('7', List.of(MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.DOT, MorseCodeSymbols.DOT, MorseCodeSymbols.DOT));
         hashMap.put('8', List.of(MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.DOT, MorseCodeSymbols.DOT));
         hashMap.put('9', List.of(MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.LINE, MorseCodeSymbols.DOT));
+    }
+
+    public HashMap<Character, List<MorseCodeSymbols>> getHashMap() {
+        return hashMap;
     }
 
     public ArrayList<MorseCodeSymbols> getArrRdy(String inputMessage) {

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView speed;
     private boolean hasCameraFlash = false;
     private boolean flashOn = false;
-    private int speedMultiplier;
+    private int speedMultiplier = 2;
 
 
     @Override
@@ -63,8 +63,22 @@ public class MainActivity extends AppCompatActivity {
         buttonSlow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                speed.setText("Slow");
+                speedMultiplier = 1;
+            }
+        });
+        buttonMedium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 speed.setText("Medium");
-
+                speedMultiplier = 2;
+            }
+        });
+        buttonSlow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speed.setText("Fast");
+                speedMultiplier = 3;
             }
         });
     }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonMedium;
     private Button buttonFast;
 
+    private EditText editText;
     private TextView speed;
     private boolean hasCameraFlash = false;
-    private boolean flashOn = false;
     private int speedMultiplier = 2;
 
 
@@ -38,25 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         hasCameraFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
+        editText.findViewById(R.id.input);
         speed = findViewById(R.id.speedIndicator);
 
         button.setOnClickListener(new View.OnClickListener() {
-            //borrowed from https://github.com/msindev/FlashLight
             @Override
             public void onClick(View v) {
-                if(hasCameraFlash){
-                    if(flashOn){
-                        flashOn = false;
-                        flashLightOff();
-                    }
-                    else{
-                        flashOn = true;
-                        flashLightOn();
-                    }
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "No flash available on your device", Toast.LENGTH_SHORT).show();
-                }
+
             }
         });
 
@@ -78,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 speed.setText("Fast");
-                speedMultiplier = 3;
+                speedMultiplier = 4;
             }
         });
     }

@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="468dp"
@@ -56,7 +56,7 @@
         android:layout_width="96dp"
         android:layout_height="33dp"
         android:text="Message"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText"
+        app:layout_constraintBottom_toTopOf="@+id/input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.244"
         app:layout_constraintStart_toStartOf="parent"

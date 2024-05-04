@@ -93,4 +93,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/speedIndicator"
+        android:layout_width="73dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="80dp"
+        android:text="medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

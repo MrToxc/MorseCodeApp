@@ -27,7 +27,7 @@ public class Flash {
 
         for (int i = 0; i < arr.size(); i++) {
             if (arr.get(i) == MorseCodeSymbols.LINE || arr.get(i) == MorseCodeSymbols.DOT) {
-                Thread.sleep(separatorLength);
+                Thread.sleep(dotLength);
             }
             switch (arr.get(i)) {
                 case DOT -> {
@@ -40,6 +40,7 @@ public class Flash {
                     Thread.sleep(linelength);
                     flashLightOff();
                 }
+                case SEPARATOR -> Thread.sleep(separatorLength);
                 case SPACE -> Thread.sleep(spaceLength);
                 case PERIOD -> Thread.sleep(periodLenght);
             }

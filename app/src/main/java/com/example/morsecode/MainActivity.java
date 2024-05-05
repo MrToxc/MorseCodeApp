@@ -21,10 +21,13 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonMedium;
     private Button buttonFast;
 
-    private EditText editText;
+    private EditText input;
     private TextView speed;
     private boolean hasCameraFlash = false;
-    private int speedMultiplier = 2;
+    private int speedDivider = 2;
+    Flash flash = new Flash();
+    Translator translator = new Translator();
+    StringPreparer stringPreparer = new StringPreparer();
 
 
     @Override
@@ -36,16 +39,21 @@ public class MainActivity extends AppCompatActivity {
         buttonSlow = findViewById(R.id.buttonSlow);
         buttonMedium = findViewById(R.id.buttonMedium);
         buttonFast = findViewById(R.id.buttonFast);
+        flash.setCameraManager((CameraManager) getSystemService(Context.CAMERA_SERVICE));
 
         hasCameraFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
-        editText.findViewById(R.id.input);
+        input = findViewById(R.id.input);
         speed = findViewById(R.id.speedIndicator);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                try {
+                    flash.flashMessage(translator.getArrRdy(stringPreparer.getStringRdy(input.toString())), speedDivider);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -53,53 +61,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 speed.setText("Slow");
-                speedMultiplier = 1;
+                speedDivider = 1;
             }
         });
         buttonMedium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 speed.setText("Medium");
-                speedMultiplier = 2;
+                speedDivider = 2;
             }
         });
-        buttonSlow.setOnClickListener(new View.OnClickListener() {
+        buttonFast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 speed.setText("Fast");
-                speedMultiplier = 4;
+                speedDivider = 4;
             }
         });
     }
 
-
-    //borrowed from https://github.com/msindev/FlashLight
-    private void flashLightOn(){
-        CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        try{
-            assert cameraManager != null;
-            String cameraId = cameraManager.getCameraIdList()[0];
-            cameraManager.setTorchMode(cameraId, true);
-            Toast.makeText(MainActivity.this, "FlashLight is ON", Toast.LENGTH_SHORT).show();
-        }
-        catch(CameraAccessException e){
-            Log.e("Camera Problem", "Cannot turn on camera flashlight");
-        }
-    }
-
-    //borrowed from https://github.com/msindev/FlashLight
-    private void flashLightOff(){
-        CameraManager cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
-        try{
-            assert cameraManager != null;
-            String cameraId = cameraManager.getCameraIdList()[0];
-            cameraManager.setTorchMode(cameraId, false);
-            Toast.makeText(MainActivity.this, "FlashLight is OFF", Toast.LENGTH_SHORT).show();
-        }
-        catch(CameraAccessException e){
-            Log.e("Camera Problem", "Cannot turn off camera flashlight");
-        }
-
-
-    }
 }

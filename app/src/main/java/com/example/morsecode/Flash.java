@@ -9,13 +9,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class Flash {
-    MainActivity mainActivity = new MainActivity();
+//    MainActivity mainActivity = new MainActivity();
+    private CameraManager cameraManager;
     private int dotLength = 400;
     private int linelength = dotLength * 3;
     private int separatorLength = dotLength;
     private int spaceLength = dotLength * 7;
     private int periodLenght = dotLength * 10;
 
+    public void setCameraManager(CameraManager cameraManager) {
+        this.cameraManager = cameraManager;
+    }
 
     public void flashMessage(ArrayList<MorseCodeSymbols> arr, int speedDivider) throws InterruptedException {
 
@@ -80,7 +84,7 @@ public class Flash {
 
     //borrowed from https://github.com/msindev/FlashLight
     private void flashLightOn() {
-        CameraManager cameraManager = (CameraManager) mainActivity.getSystemService(Context.CAMERA_SERVICE);
+        CameraManager cameraManager = this.cameraManager;
         try {
             assert cameraManager != null;
             String cameraId = cameraManager.getCameraIdList()[0];
@@ -92,7 +96,7 @@ public class Flash {
 
     //borrowed from https://github.com/msindev/FlashLight
     private void flashLightOff() {
-        CameraManager cameraManager = (CameraManager) mainActivity.getSystemService(Context.CAMERA_SERVICE);
+        CameraManager cameraManager = this.cameraManager;
         try {
             assert cameraManager != null;
             String cameraId = cameraManager.getCameraIdList()[0];

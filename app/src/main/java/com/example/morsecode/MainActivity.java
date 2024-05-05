@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    flash.flashMessage(translator.getArrRdy(stringPreparer.getStringRdy(input.toString())), speedDivider);
+                    //error
+                    flash.flashMessage(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

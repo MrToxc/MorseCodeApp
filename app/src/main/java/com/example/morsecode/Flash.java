@@ -11,11 +11,7 @@ import java.util.ArrayList;
 public class Flash {
 //    MainActivity mainActivity = new MainActivity();
     private CameraManager cameraManager;
-    private int dotLength = 400;
-    private int linelength = dotLength * 3;
-    private int separatorLength = dotLength;
-    private int spaceLength = dotLength * 7;
-    private int periodLenght = dotLength * 10;
+    private int statingDotLength = 600;
 
     public void setCameraManager(CameraManager cameraManager) {
         this.cameraManager = cameraManager;
@@ -23,11 +19,11 @@ public class Flash {
 
     public void flashMessage(ArrayList<MorseCodeSymbols> arr, int speedDivider) throws InterruptedException {
 
-        dotLength = dotLength / speedDivider;
-        linelength = dotLength * 3;
-        separatorLength = dotLength;
-        spaceLength = dotLength * 7;
-        periodLenght = dotLength * 10;
+        int dotLength = statingDotLength / speedDivider;
+        int linelength = dotLength * 3;
+        int separatorLength = dotLength * 3;
+        int spaceLength = dotLength * 7;
+        int periodLenght = dotLength * 10;
 
         for (int i = 0; i < arr.size(); i++) {
             if (arr.get(i) == MorseCodeSymbols.LINE || arr.get(i) == MorseCodeSymbols.DOT) {

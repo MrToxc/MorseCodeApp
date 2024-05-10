@@ -4,22 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button button;
+    private Button buttonFlash;
     private Button buttonSlow;
     private Button buttonMedium;
     private Button buttonFast;
+    private Button buttonAudio;
 
     private EditText input;
     private TextView speed;
@@ -28,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Flash flash = new Flash();
     Translator translator = new Translator();
     StringPreparer stringPreparer = new StringPreparer();
+    AudioMorse audioMorse = new AudioMorse();
 
 
     @Override
@@ -35,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = findViewById(R.id.button);
+        buttonFlash = findViewById(R.id.button);
+        buttonAudio = findViewById(R.id.buttonAudio);
         buttonSlow = findViewById(R.id.buttonSlow);
         buttonMedium = findViewById(R.id.buttonMedium);
         buttonFast = findViewById(R.id.buttonFast);
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         input = findViewById(R.id.input);
         speed = findViewById(R.id.speedIndicator);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonFlash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hasCameraFlash) {
@@ -56,10 +56,12 @@ public class MainActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                 } else {
-
+                    //flashing screen
                 }
             }
         });
+
+
 
         buttonSlow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 speed.setText("Fast");
                 speedDivider = 4;
+            }
+        });
+        buttonAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            audioMorse.playTone();
             }
         });
     }

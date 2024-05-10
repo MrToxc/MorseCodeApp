@@ -1,17 +1,14 @@
 package com.example.morsecode;
 
-import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class Flash {
-//    MainActivity mainActivity = new MainActivity();
     private CameraManager cameraManager;
-    private int statingDotLength = 600;
+    private int statingDotLength = 400;
 
     public void setCameraManager(CameraManager cameraManager) {
         this.cameraManager = cameraManager;

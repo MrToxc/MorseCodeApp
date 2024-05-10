@@ -49,11 +49,14 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    //error
-                    flash.flashMessage(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                if (hasCameraFlash) {
+                    try {
+                        flash.flashMessage(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+
                 }
             }
         });

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,10 +19,12 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonMedium;
     private Button buttonFast;
     private Button buttonAudio;
+    private Switch language;
 
     private EditText input;
     private TextView speed;
     private boolean hasCameraFlash = false;
+    String message;
     private int speedDivider = 2;
     Flash flash = new Flash();
     Translator translator = new Translator();
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSlow = findViewById(R.id.buttonSlow);
         buttonMedium = findViewById(R.id.buttonMedium);
         buttonFast = findViewById(R.id.buttonFast);
+        language = findViewById(R.id.switchLanguage);
         flash.setCameraManager((CameraManager) getSystemService(Context.CAMERA_SERVICE));
 
         hasCameraFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
@@ -51,11 +55,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (hasCameraFlash) {
                     try {
-                        flash.flashMessage(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
+                        if (language.isActivated()) {
+                            flash.flashMessage(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))), speedDivider);
+                        } else flash.flashMessage(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 } else {
+                    //getCzech?
                     //flashing screen
                 }
             }

@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.95" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/switchLanguage"
         android:layout_width="108dp"
         android:layout_height="51dp"
         android:layout_marginTop="36dp"
@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.244"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1"
+        app:layout_constraintTop_toBottomOf="@+id/switchLanguage"
         app:layout_constraintVertical_bias="0.947" />
 
     <Button

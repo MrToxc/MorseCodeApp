@@ -44,9 +44,9 @@ public class AudioMorse {
                 }
             }
             if (canBePlayed) {
-                //This part is from chatGPT
         int sampleRate = 44100;
         // Buffer size in bytes
+                //This part is from chatGPT
         int bufferSize = AudioTrack.getMinBufferSize(sampleRate,
                 AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_8BIT);

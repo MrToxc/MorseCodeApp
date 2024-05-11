@@ -16,6 +16,18 @@ public class AudioMorse {
         double spaceLength = dotLength * 7 * 1000;
         double periodLenght = dotLength * 10 * 1000;
         boolean canBePlayed = false;
+        // Buffer size in bytes
+        int sampleRate = 44100;
+        //This part is from chatGPT
+        int bufferSize = AudioTrack.getMinBufferSize(sampleRate,
+                AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_8BIT);
+        AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
+                sampleRate,
+                AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_8BIT,
+                bufferSize,
+                AudioTrack.MODE_STREAM);
         // Sample rate (Hz)
         // Sine wave parameters
                 double duration = 0; // seconds
@@ -44,18 +56,6 @@ public class AudioMorse {
                 }
             }
             if (canBePlayed) {
-        int sampleRate = 44100;
-        // Buffer size in bytes
-                //This part is from chatGPT
-        int bufferSize = AudioTrack.getMinBufferSize(sampleRate,
-                AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_8BIT);
-        AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
-                sampleRate,
-                AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_8BIT,
-                bufferSize,
-                AudioTrack.MODE_STREAM);
                 int numSamples = (int) (duration * sampleRate);
                 byte[] generatedSnd = new byte[2 * numSamples];
                 for (int i = 0; i < numSamples; ++i) {
@@ -65,9 +65,9 @@ public class AudioMorse {
             audioTrack.play();
             audioTrack.write(generatedSnd, 0, generatedSnd.length);
             audioTrack.stop();
-            audioTrack.release();
             Thread.sleep((int) dotLength);
             }
         }
+            audioTrack.release();
     }
 }

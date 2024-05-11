@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText input;
     private TextView speed;
     private boolean hasCameraFlash = false;
-    String message;
+    private boolean languageBoolean = false;
     private int speedDivider = 2;
     Flash flash = new Flash();
     Translator translator = new Translator();
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (hasCameraFlash) {
                     try {
-                        if (language.isActivated()) {
+                        if (languageBoolean) {
                             flash.flashMessage(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))), speedDivider);
                         } else flash.flashMessage(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
                     } catch (InterruptedException e) {
@@ -68,6 +68,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (languageBoolean) {
+                        audioMorse.playTone(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))), speedDivider);
+                    } else
+                        audioMorse.playTone(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        language.setOnClickListener(new View.OnClickListener() {
+            //this method is here, because .isActivated() somehow doesnt works
+            @Override
+            public void onClick(View v) {
+                if (languageBoolean) {
+                    languageBoolean = false;
+                } else languageBoolean = true;
+            }
+        });
 
 
         buttonSlow.setOnClickListener(new View.OnClickListener() {
@@ -89,16 +111,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 speed.setText("Fast");
                 speedDivider = 4;
-            }
-        });
-        buttonAudio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    audioMorse.playTone(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
             }
         });
     }

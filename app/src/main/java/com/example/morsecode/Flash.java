@@ -6,15 +6,36 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class Flash {
+public class Flash implements Runnable{
     private CameraManager cameraManager;
     private int statingDotLength = 400;
+
+    private boolean rdyForNext = true;
+    private ArrayList<MorseCodeSymbols> finalArray = new ArrayList<>();
+
+    private int speedDivider;
+
+    public boolean isRdyForNext() {
+        return rdyForNext;
+    }
+
+    public void setRdyForNext(boolean rdyForNext) {
+        this.rdyForNext = rdyForNext;
+    }
+
+    public void setSpeedDivider(int speedDivider) {
+        this.speedDivider = speedDivider;
+    }
+
+    public void setFinalArray(ArrayList<MorseCodeSymbols> finalArray) {
+        this.finalArray = finalArray;
+    }
 
     public void setCameraManager(CameraManager cameraManager) {
         this.cameraManager = cameraManager;
     }
 
-    public void flashMessage(ArrayList<MorseCodeSymbols> arr, int speedDivider) throws InterruptedException {
+    public void flashMessage() throws InterruptedException {
 
         int dotLength = statingDotLength / speedDivider;
         int linelength = dotLength * 3;
@@ -22,11 +43,11 @@ public class Flash {
         int spaceLength = dotLength * 7;
         int periodLenght = dotLength * 10;
 
-        for (int i = 0; i < arr.size(); i++) {
-            if (arr.get(i) == MorseCodeSymbols.LINE || arr.get(i) == MorseCodeSymbols.DOT) {
+        for (int i = 0; i < finalArray.size(); i++) {
+            if (finalArray.get(i) == MorseCodeSymbols.LINE || finalArray.get(i) == MorseCodeSymbols.DOT) {
                 Thread.sleep(dotLength);
             }
-            switch (arr.get(i)) {
+            switch (finalArray.get(i)) {
                 case DOT -> {
                     flashLightOn();
                     Thread.sleep(dotLength);
@@ -42,36 +63,8 @@ public class Flash {
                 case PERIOD -> Thread.sleep(periodLenght);
             }
         }
+        rdyForNext = true;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -101,6 +94,12 @@ public class Flash {
     }
 
 
-
-
+    @Override
+    public void run() {
+        try {
+            flashMessage();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

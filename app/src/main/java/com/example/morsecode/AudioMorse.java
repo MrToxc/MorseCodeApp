@@ -6,10 +6,29 @@ import android.media.AudioTrack;
 
 import java.util.ArrayList;
 
-public class AudioMorse {
+public class AudioMorse implements Runnable {
     final double statingDotLength = 0.4;
+    private ArrayList<MorseCodeSymbols> finalArray = new ArrayList<>();
+    private int speedDivider;
+    private boolean rdyForNext = true;
 
-    public void playTone(ArrayList<MorseCodeSymbols> arrayList, int speedDivider) throws InterruptedException {
+    public boolean isRdyForNext() {
+        return rdyForNext;
+    }
+
+    public void setRdyForNext(boolean rdyForNext) {
+        this.rdyForNext = rdyForNext;
+    }
+
+    public void setSpeedDivider(int speedDivider) {
+        this.speedDivider = speedDivider;
+    }
+
+    public void setFinalArray(ArrayList<MorseCodeSymbols> finalArray) {
+        this.finalArray = finalArray;
+    }
+
+    public void playTone() throws InterruptedException {
         double dotLength = statingDotLength / speedDivider;
         double linelength = dotLength * 3;
         double separatorLength = linelength * 1000;
@@ -32,8 +51,8 @@ public class AudioMorse {
         // Sine wave parameters
                 double duration = 0; // seconds
                 double freqOfTone = 240; // Frequency (Hz)
-        for (int l = 0; l < arrayList.size(); l++) {
-            switch (arrayList.get(l)) {
+        for (int l = 0; l < finalArray.size(); l++) {
+            switch (finalArray.get(l)) {
                 case DOT -> {
                     duration = dotLength;
                     canBePlayed = true;
@@ -69,5 +88,15 @@ public class AudioMorse {
             }
         }
             audioTrack.release();
+            rdyForNext = true;
+    }
+
+    @Override
+    public void run() {
+        try {
+            playTone();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

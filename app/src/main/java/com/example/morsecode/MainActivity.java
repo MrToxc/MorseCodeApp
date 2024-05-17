@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView speed;
     private boolean hasCameraFlash = false;
     private boolean languageBoolean = false;
+    private boolean readyForNext = true;
+    private boolean currentlyPlaying = false;
     private int speedDivider = 2;
     Flash flash = new Flash();
     Translator translator = new Translator();
@@ -54,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (hasCameraFlash) {
-                    try {
+                    if (flash.isRdyForNext()) {
+                        flash.setRdyForNext(false);
                         if (languageBoolean) {
-                            flash.flashMessage(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))), speedDivider);
-                        } else flash.flashMessage(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                            flash.setFinalArray(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))));
+                        } else flash.setFinalArray(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))));
+                        flash.setSpeedDivider(speedDivider);
+                        Thread thread = new Thread(flash);
+                        thread.start();
                     }
                 } else {
                     //getCzech?
@@ -68,19 +72,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //it keeps crashing, i need to limit the number of messages beeing played to one
         buttonAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
+                if (audioMorse.isRdyForNext()) {
+                    audioMorse.setRdyForNext(false);
                     if (languageBoolean) {
-                        audioMorse.playTone(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))), speedDivider);
-                    } else
-                        audioMorse.playTone(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))), speedDivider);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    audioMorse.setFinalArray(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))));
+                    } else audioMorse.setFinalArray(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))));
+                    audioMorse.setSpeedDivider(speedDivider);
+                    Thread thread = new Thread(audioMorse);
+                    thread.start();
                 }
             }
         });
+
         language.setOnClickListener(new View.OnClickListener() {
             //this method is here, because .isActivated() somehow doesnt works
             @Override
@@ -114,5 +121,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

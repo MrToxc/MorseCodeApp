@@ -37,6 +37,7 @@ public class AudioMorse implements Runnable {
         boolean canBePlayed = false;
         // Buffer size in bytes
         int sampleRate = 44100;
+
         //This part is from chatGPT
         int bufferSize = AudioTrack.getMinBufferSize(sampleRate,
                 AudioFormat.CHANNEL_OUT_MONO,
@@ -51,6 +52,9 @@ public class AudioMorse implements Runnable {
         // Sine wave parameters
                 double duration = 0; // seconds
                 double freqOfTone = 240; // Frequency (Hz)
+
+
+
         for (int l = 0; l < finalArray.size(); l++) {
             switch (finalArray.get(l)) {
                 case DOT -> {

@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView speed;
     private boolean hasCameraFlash = false;
     private boolean languageBoolean = false;
-    private boolean readyForNext = true;
-    private boolean currentlyPlaying = false;
     private int speedDivider = 2;
     Flash flash = new Flash();
     Translator translator = new Translator();
@@ -72,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //it keeps crashing, i need to limit the number of messages beeing played to one
         buttonAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

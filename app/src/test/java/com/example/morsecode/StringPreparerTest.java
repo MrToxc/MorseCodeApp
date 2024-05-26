@@ -19,5 +19,11 @@ public class StringPreparerTest {
         assertEquals("$ata hro$. $leba", stringPreparer.getCzech("chata hroch. chleba"));
     }
 
+    @Test
+    public void removeAccentsGetStringRdyTest() {
+        StringPreparer stringPreparer = new StringPreparer();
+        assertEquals("scrzyzruu", stringPreparer.getStringRdy("ščřŽÝŽřůú"));
+    }
+
 
 }

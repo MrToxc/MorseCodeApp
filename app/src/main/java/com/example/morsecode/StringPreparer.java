@@ -1,11 +1,14 @@
 package com.example.morsecode;
 
+import java.text.Normalizer;
+
 public class StringPreparer {
 
 
     private Translator translator = new Translator();
 
     public String getStringRdy(String string) {
+        string = Normalizer.normalize(string, Normalizer.Form.NFD);
         string = string.toLowerCase();
         String finalString = "";
         char[] charArray = string.toCharArray();
@@ -19,7 +22,6 @@ public class StringPreparer {
     }
 
     public String getCzech(String string) {
-        string = string.trim();
         string = string.toLowerCase();
         String finalString = "";
         char[] charArray = string.toCharArray();

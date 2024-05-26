@@ -7,7 +7,8 @@ import android.media.AudioTrack;
 import java.util.ArrayList;
 
 public class AudioMorse implements Runnable {
-    final double statingDotLength = 0.4;
+    Constants constants = new Constants();
+    final double statingDotLength = constants.getDotLengthS();
     private ArrayList<MorseCodeSymbols> finalArray = new ArrayList<>();
     private int speedDivider;
     private boolean rdyForNext = true;
@@ -51,7 +52,7 @@ public class AudioMorse implements Runnable {
         // Sample rate (Hz)
         // Sine wave parameters
                 double duration = 0; // seconds
-                double freqOfTone = 240; // Frequency (Hz)
+                double freqOfTone = constants.getFrequency(); // Frequency (Hz)
 
 
 

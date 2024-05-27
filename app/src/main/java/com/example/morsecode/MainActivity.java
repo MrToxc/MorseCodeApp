@@ -7,117 +7,90 @@ import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonFlash;
-    private Button buttonSlow;
-    private Button buttonMedium;
-    private Button buttonFast;
     private Button buttonAudio;
     private Switch language;
-
     private EditText input;
-    private TextView speed;
+    private Spinner spinner;
     private boolean hasCameraFlash = false;
     private boolean languageBoolean = false;
-    private int speedDivider = 2;
     Flash flash = new Flash();
     Translator translator = new Translator();
     StringPreparer stringPreparer = new StringPreparer();
     AudioMorse audioMorse = new AudioMorse();
 
+    private int getSpeedDivider() {
+        return switch (spinner.getSelectedItem().toString()) {
+            case "slow" -> 1;
+            case "medium" -> 2;
+            case "fast" -> 4;
+            default -> throw new IllegalStateException("Unknown speed" + spinner.getPrompt());
+        };
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        spinner = findViewById(R.id.spinner);
         buttonFlash = findViewById(R.id.button);
         buttonAudio = findViewById(R.id.buttonAudio);
-        buttonSlow = findViewById(R.id.buttonSlow);
-        buttonMedium = findViewById(R.id.buttonMedium);
-        buttonFast = findViewById(R.id.buttonFast);
         language = findViewById(R.id.switchLanguage);
         flash.setCameraManager((CameraManager) getSystemService(Context.CAMERA_SERVICE));
+
+        ArrayAdapter<CharSequence>adapter= ArrayAdapter.createFromResource(this, R.array.speedModifiers, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinner.setAdapter(adapter);
 
         hasCameraFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
         input = findViewById(R.id.input);
-        speed = findViewById(R.id.speedIndicator);
 
-        buttonFlash.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (hasCameraFlash) {
-                    if (flash.isRdyForNext()) {
-                        flash.setRdyForNext(false);
-                        if (languageBoolean) {
-                            flash.setFinalArray(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))));
-                        } else flash.setFinalArray(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))));
-                        flash.setSpeedDivider(speedDivider);
-                        Thread thread = new Thread(flash);
-                        thread.start();
-                    }
-                } else {
-                    //getCzech?
-                    //flashing screen
-                }
-            }
-        });
-
-        buttonAudio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (audioMorse.isRdyForNext()) {
-                    audioMorse.setRdyForNext(false);
+        buttonFlash.setOnClickListener(v -> {
+            if (hasCameraFlash) {
+                if (flash.isRdyForNext()) {
+                    flash.setRdyForNext(false);
                     if (languageBoolean) {
-                    audioMorse.setFinalArray(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))));
-                    } else audioMorse.setFinalArray(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))));
-                    audioMorse.setSpeedDivider(speedDivider);
-                    Thread thread = new Thread(audioMorse);
+                        flash.setFinalArray(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))));
+                    } else flash.setFinalArray(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))));
+                    flash.setSpeedDivider(getSpeedDivider());
+                    Thread thread = new Thread(flash);
                     thread.start();
                 }
+            } else {
+                //getCzech?
+                //flashing screen
             }
         });
 
-        language.setOnClickListener(new View.OnClickListener() {
-            //this method is here, because .isActivated() somehow doesnt works
-            @Override
-            public void onClick(View v) {
+        buttonAudio.setOnClickListener(v -> {
+            if (audioMorse.isRdyForNext()) {
+                audioMorse.setRdyForNext(false);
                 if (languageBoolean) {
-                    languageBoolean = false;
-                } else languageBoolean = true;
+                audioMorse.setFinalArray(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))));
+                } else audioMorse.setFinalArray(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))));
+                audioMorse.setSpeedDivider(getSpeedDivider());
+                Thread thread = new Thread(audioMorse);
+                thread.start();
             }
         });
 
+        language.setOnClickListener(v -> languageBoolean = !languageBoolean);
 
-        buttonSlow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                speed.setText("Slow");
-                speedDivider = 1;
-            }
-        });
-        buttonMedium.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                speed.setText("Medium");
-                speedDivider = 2;
-            }
-        });
-        buttonFast.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                speed.setText("Fast");
-                speedDivider = 4;
-            }
-        });
+
+
+
+
+
     }
-
-
 }

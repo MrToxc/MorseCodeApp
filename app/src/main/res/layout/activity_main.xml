@@ -63,44 +63,15 @@
         app:layout_constraintTop_toBottomOf="@+id/switchLanguage"
         app:layout_constraintVertical_bias="0.947" />
 
-    <Button
-        android:id="@+id/buttonFast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="128dp"
-        android:text="Fast"
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="157dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="52dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
-        android:text="Medium"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSlow"
-        app:layout_constraintStart_toEndOf="@+id/buttonFast"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/buttonSlow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
-        android:layout_marginEnd="24dp"
-        android:text="Slow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/speedIndicator"
-        android:layout_width="73dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="80dp"
-        android:text="medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/input"
+        app:layout_constraintVertical_bias="0.081" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

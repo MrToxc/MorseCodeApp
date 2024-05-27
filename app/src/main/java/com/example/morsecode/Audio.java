@@ -6,12 +6,12 @@ import android.media.AudioTrack;
 
 import java.util.ArrayList;
 
-public class AudioMorse implements Runnable {
-    Constants constants = new Constants();
-    final double statingDotLength = constants.getDotLengthS();
+public class Audio implements Runnable {
+    final double statingDotLength = Constants.dotLengthS;
     private ArrayList<MorseCodeSymbols> finalArray = new ArrayList<>();
     private int speedDivider;
     private boolean rdyForNext = true;
+    private boolean stopped = false;
 
     public boolean isRdyForNext() {
         return rdyForNext;
@@ -30,6 +30,7 @@ public class AudioMorse implements Runnable {
     }
 
     public void playTone() throws InterruptedException {
+        stopped = false;
         double dotLength = statingDotLength / speedDivider;
         double linelength = dotLength * 3;
         double separatorLength = linelength * 1000;
@@ -39,7 +40,7 @@ public class AudioMorse implements Runnable {
         // Buffer size in bytes
         int sampleRate = 44100;
 
-        //This part is from chatGPT
+        //Next 9 lines are from chatGPT
         int bufferSize = AudioTrack.getMinBufferSize(sampleRate,
                 AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_8BIT);
@@ -52,11 +53,14 @@ public class AudioMorse implements Runnable {
         // Sample rate (Hz)
         // Sine wave parameters
                 double duration = 0; // seconds
-                double freqOfTone = constants.getFrequency(); // Frequency (Hz)
+                double freqOfTone = Constants.frequency; // Frequency (Hz)
 
 
 
         for (int l = 0; l < finalArray.size(); l++) {
+            if (stopped) {
+                break;
+            }
             switch (finalArray.get(l)) {
                 case DOT -> {
                     duration = dotLength;
@@ -92,9 +96,16 @@ public class AudioMorse implements Runnable {
             Thread.sleep((int) dotLength);
             }
         }
-            audioTrack.release();
-            rdyForNext = true;
+
+        audioTrack.release();
+        rdyForNext = true;
+        stopped = false;
     }
+
+    public void stop() {
+        stopped = true;
+    }
+
 
     @Override
     public void run() {

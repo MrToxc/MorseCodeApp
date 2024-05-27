@@ -6,18 +6,17 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonFlash;
     private Button buttonAudio;
+    private Button buttonStop;
     private Switch language;
     private EditText input;
     private Spinner spinner;
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Flash flash = new Flash();
     Translator translator = new Translator();
     StringPreparer stringPreparer = new StringPreparer();
-    AudioMorse audioMorse = new AudioMorse();
+    Audio audio = new Audio();
 
     private int getSpeedDivider() {
         return switch (spinner.getSelectedItem().toString()) {
@@ -45,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         spinner = findViewById(R.id.spinner);
         buttonFlash = findViewById(R.id.button);
         buttonAudio = findViewById(R.id.buttonAudio);
+        buttonStop = findViewById(R.id.buttonStop);
         language = findViewById(R.id.switchLanguage);
         flash.setCameraManager((CameraManager) getSystemService(Context.CAMERA_SERVICE));
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonFlash.setOnClickListener(v -> {
             if (hasCameraFlash) {
-                if (flash.isRdyForNext()) {
+                if (flash.isRdyForNext() && audio.isRdyForNext()) {
                     flash.setRdyForNext(false);
                     if (languageBoolean) {
                         flash.setFinalArray(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))));
@@ -74,15 +74,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buttonAudio.setOnClickListener(v -> {
-            if (audioMorse.isRdyForNext()) {
-                audioMorse.setRdyForNext(false);
+            if (flash.isRdyForNext() && audio.isRdyForNext()) {
+                audio.setRdyForNext(false);
                 if (languageBoolean) {
-                audioMorse.setFinalArray(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))));
-                } else audioMorse.setFinalArray(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))));
-                audioMorse.setSpeedDivider(getSpeedDivider());
-                Thread thread = new Thread(audioMorse);
+                audio.setFinalArray(translator.getArrRdy(stringPreparer.getCzech(stringPreparer.getStringRdy(String.valueOf(input.getText())))));
+                } else audio.setFinalArray(translator.getArrRdy(stringPreparer.getStringRdy(String.valueOf(input.getText()))));
+                audio.setSpeedDivider(getSpeedDivider());
+                Thread thread = new Thread(audio);
                 thread.start();
             }
+        });
+
+        buttonStop.setOnClickListener(v -> {
+            flash.stop();
+            audio.stop();
         });
 
         language.setOnClickListener(v -> languageBoolean = !languageBoolean);

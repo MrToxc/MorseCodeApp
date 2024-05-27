@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class Flash implements Runnable{
     private CameraManager cameraManager;
-    private int statingDotLength = 400;
 
     private boolean rdyForNext = true;
     private ArrayList<MorseCodeSymbols> finalArray = new ArrayList<>();
 
     private int speedDivider;
+    private boolean stopped = false;
 
     public boolean isRdyForNext() {
         return rdyForNext;
@@ -36,7 +36,8 @@ public class Flash implements Runnable{
     }
 
     public void flashMessage() throws InterruptedException {
-
+        stopped = false;
+        int statingDotLength = Constants.dotLengthMs;
         int dotLength = statingDotLength / speedDivider;
         int linelength = dotLength * 3;
         int separatorLength = dotLength * 3;
@@ -44,6 +45,9 @@ public class Flash implements Runnable{
         int periodLenght = dotLength * 10;
 
         for (int i = 0; i < finalArray.size(); i++) {
+            if (stopped) {
+                break;
+            }
             if (finalArray.get(i) == MorseCodeSymbols.LINE || finalArray.get(i) == MorseCodeSymbols.DOT) {
                 Thread.sleep(dotLength);
             }
@@ -63,10 +67,14 @@ public class Flash implements Runnable{
                 case PERIOD -> Thread.sleep(periodLenght);
             }
         }
+        stopped = false;
         rdyForNext = true;
     }
 
 
+    public void stop() {
+        stopped = true;
+    }
 
 
     //borrowed from https://github.com/msindev/FlashLight

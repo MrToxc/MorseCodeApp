@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonFlash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.132"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonFlash" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -45,7 +45,7 @@
         android:text="Audio"
         app:layout_constraintEnd_toStartOf="@+id/buttonStop"
         app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/buttonFlash"
         app:layout_constraintTop_toBottomOf="@+id/input" />
 
     <EditText
@@ -58,10 +58,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/inputLabel" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/inputLabel"
         android:layout_width="96dp"
         android:layout_height="33dp"
         android:layout_marginTop="11dp"
@@ -100,12 +100,11 @@
         android:layout_width="330dp"
         android:layout_height="36dp"
         android:layout_marginStart="40dp"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/morseCodeOriginal" />
+        app:layout_constraintTop_toBottomOf="@+id/morseCodeLabel" />
 
     <TextView
-        android:id="@+id/morseCodeOriginal"
+        android:id="@+id/morseCodeLabel"
         android:layout_width="119dp"
         android:layout_height="26dp"
         android:layout_marginStart="40dp"
@@ -116,18 +115,17 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/progressText"
         android:layout_width="330dp"
         android:layout_height="36dp"
         android:layout_marginStart="40dp"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/morseCodeProgress"
+        app:layout_constraintTop_toBottomOf="@+id/progressLabel"
         app:layout_constraintVertical_bias="0.004" />
 
     <TextView
-        android:id="@+id/morseCodeProgress"
+        android:id="@+id/progressLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"

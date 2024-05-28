@@ -3,17 +3,22 @@ package com.example.morsecode;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class Flash implements Runnable{
+public class Flash implements Runnable {
     private CameraManager cameraManager;
-
+    private TextView progressText;
     private boolean rdyForNext = true;
-    private ArrayList<MorseCodeSymbols> finalArray = new ArrayList<>();
+    private ArrayList<MorseCodeSymbols> morseCode = new ArrayList<>();
 
     private int speedDivider;
     private boolean stopped = false;
+
+    public void setProgressText(TextView progressText) {
+        this.progressText = progressText;
+    }
 
     public boolean isRdyForNext() {
         return rdyForNext;
@@ -27,8 +32,8 @@ public class Flash implements Runnable{
         this.speedDivider = speedDivider;
     }
 
-    public void setFinalArray(ArrayList<MorseCodeSymbols> finalArray) {
-        this.finalArray = finalArray;
+    public void setMorseCode(ArrayList<MorseCodeSymbols> morseCode) {
+        this.morseCode = morseCode;
     }
 
     public void setCameraManager(CameraManager cameraManager) {
@@ -44,14 +49,16 @@ public class Flash implements Runnable{
         int spaceLength = dotLength * 7;
         int periodLenght = dotLength * 10;
 
-        for (int i = 0; i < finalArray.size(); i++) {
+        progressText.setText("");
+        for (int i = 0; i < morseCode.size(); i++) {
             if (stopped) {
                 break;
             }
-            if (finalArray.get(i) == MorseCodeSymbols.LINE || finalArray.get(i) == MorseCodeSymbols.DOT) {
+            progressText.setText(progressText.getText().toString() + morseCode.get(i).toString());
+            if (morseCode.get(i) == MorseCodeSymbols.LINE || morseCode.get(i) == MorseCodeSymbols.DOT) {
                 Thread.sleep(dotLength);
             }
-            switch (finalArray.get(i)) {
+            switch (morseCode.get(i)) {
                 case DOT -> {
                     flashLightOn();
                     Thread.sleep(dotLength);

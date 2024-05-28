@@ -3,6 +3,7 @@ package com.example.morsecode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 //This class is used to translate letters into morse code
 public class Translator {
@@ -55,17 +56,18 @@ public class Translator {
         return hashMap;
     }
 
-    public ArrayList<MorseCodeSymbols> getArrRdy(String inputMessage) {
-        inputMessage = inputMessage.toLowerCase();
-        ArrayList<MorseCodeSymbols> arr = new ArrayList<>();
-        char[] arrayInput = inputMessage.toCharArray();
-        for (int i = 0; i < arrayInput.length; i++) {
-            for (MorseCodeSymbols currentSymbol : hashMap.get(arrayInput[i])) {
-                arr.add(currentSymbol);
-            }
-            arr.add(MorseCodeSymbols.SEPARATOR);
+    //TODO pred a za mezeru to pise separator
+    public ArrayList<MorseCodeSymbols> stringToMorseCode(final String inputMessage) {
+        ArrayList<MorseCodeSymbols> morseCode = new ArrayList<>();
+        char[] arrayInput = inputMessage.toLowerCase().toCharArray();
+        for (char c : arrayInput) {
+            morseCode.addAll(Objects.requireNonNull(hashMap.get(c)));
+            morseCode.add(MorseCodeSymbols.SEPARATOR);
         }
-        return arr;
+        morseCode.remove(morseCode.size() - 1);
+        return morseCode;
     }
+
+
 
 }

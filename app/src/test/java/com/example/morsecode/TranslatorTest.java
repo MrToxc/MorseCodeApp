@@ -19,6 +19,6 @@ public class TranslatorTest {
     @Test
     public void translatorTest() {
         Translator translator = new Translator();
-        assertEquals(List.of(DOT, LINE, SEPARATOR, DOT, DOT, DOT, DOT, SEPARATOR, LINE, LINE, LINE, SEPARATOR, DOT, LINE, LINE, LINE, SEPARATOR), translator.getArrRdy("Ahoj"));
+        assertEquals(List.of(DOT, LINE, SEPARATOR, DOT, DOT, DOT, DOT, SEPARATOR, LINE, LINE, LINE, SEPARATOR, DOT, LINE, LINE, LINE, SEPARATOR), translator.stringToMorseCode("Ahoj"));
     }
 }

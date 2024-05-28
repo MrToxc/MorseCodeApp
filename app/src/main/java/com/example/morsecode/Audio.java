@@ -3,15 +3,21 @@ package com.example.morsecode;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class Audio implements Runnable {
     final double statingDotLength = Constants.dotLengthS;
-    private ArrayList<MorseCodeSymbols> finalArray = new ArrayList<>();
+    private ArrayList<MorseCodeSymbols> morseCode = new ArrayList<>();
     private int speedDivider;
     private boolean rdyForNext = true;
     private boolean stopped = false;
+    private TextView progressText;
+
+    public void setProgressText(TextView progressText) {
+        this.progressText = progressText;
+    }
 
     public boolean isRdyForNext() {
         return rdyForNext;
@@ -25,8 +31,8 @@ public class Audio implements Runnable {
         this.speedDivider = speedDivider;
     }
 
-    public void setFinalArray(ArrayList<MorseCodeSymbols> finalArray) {
-        this.finalArray = finalArray;
+    public void setMorseCode(ArrayList<MorseCodeSymbols> morseCode) {
+        this.morseCode = morseCode;
     }
 
     public void playTone() throws InterruptedException {
@@ -57,11 +63,13 @@ public class Audio implements Runnable {
 
 
 
-        for (int l = 0; l < finalArray.size(); l++) {
+        progressText.setText("");
+        for (int l = 0; l < morseCode.size(); l++) {
             if (stopped) {
                 break;
             }
-            switch (finalArray.get(l)) {
+            progressText.setText(progressText.getText().toString() + morseCode.get(l).toString());
+            switch (morseCode.get(l)) {
                 case DOT -> {
                     duration = dotLength;
                     canBePlayed = true;

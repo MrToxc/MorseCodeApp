@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                     thread.start();
                 }
             } else {
+                //hasCameraFlash is showing true, when it shoudnt
+                return;
                 //getCzech?
                 //flashing screen
             }

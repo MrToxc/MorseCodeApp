@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         switchLenguage = findViewById(R.id.switchLanguage);
         progressText = findViewById(R.id.progressText);
         flash.setCameraManager((CameraManager) getSystemService(Context.CAMERA_SERVICE));
+        translator.setMorseCodeView(findViewById(R.id.morseCodeView));
 
         ArrayAdapter<CharSequence>adapter = ArrayAdapter.createFromResource(this, R.array.speedModifiers, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);

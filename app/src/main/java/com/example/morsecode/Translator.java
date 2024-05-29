@@ -1,5 +1,8 @@
 package com.example.morsecode;
 
+import android.view.View;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +11,11 @@ import java.util.Objects;
 //This class is used to translate letters into morse code
 public class Translator {
     HashMap<Character, List<MorseCodeSymbols>> hashMap = new HashMap<>();
+    private TextView morseCodeView;
+
+    public void setMorseCodeView(TextView morseCodeView) {
+        this.morseCodeView = morseCodeView;
+    }
 
     public Translator() {
         hashMap.put('a', List.of(MorseCodeSymbols.DOT, MorseCodeSymbols.LINE));
@@ -60,11 +68,25 @@ public class Translator {
     public ArrayList<MorseCodeSymbols> stringToMorseCode(final String inputMessage) {
         ArrayList<MorseCodeSymbols> morseCode = new ArrayList<>();
         char[] arrayInput = inputMessage.toLowerCase().toCharArray();
-        for (char c : arrayInput) {
-            morseCode.addAll(Objects.requireNonNull(hashMap.get(c)));
-            morseCode.add(MorseCodeSymbols.SEPARATOR);
+        for (int i = 0; i < arrayInput.length; i++) {
+            morseCode.addAll(Objects.requireNonNull(hashMap.get(arrayInput[i])));
+            if (i > 0) {
+                if (arrayInput[i] != ' ' && arrayInput[i] != '.' && arrayInput[i - 1] != ' ' && arrayInput[i - 1] != '.') {
+                    morseCode.add(MorseCodeSymbols.SEPARATOR);
+                }
+            } else if (arrayInput[i] != ' ' && arrayInput[i] != '.') {
+                morseCode.add(MorseCodeSymbols.SEPARATOR);
+            }
         }
+        if (morseCode.size() > 0) {
         morseCode.remove(morseCode.size() - 1);
+        }
+        String morseCodeViewString = "";
+        for (MorseCodeSymbols symbol : morseCode) {
+            morseCodeViewString += symbol.toString();
+        }
+        morseCodeView.setText(morseCodeViewString);
+
         return morseCode;
     }
 

@@ -21,8 +21,13 @@ public class MainActivity extends AppCompatActivity {
     private Switch switchLenguage;
     private EditText input;
     private TextView progressText;
+
+    private TextView textViewHeading;
+    private TextView inputLabel;
+    private TextView morseCodeLabel;
+    private TextView progressLabel;
     private Spinner spinner;
-    private boolean hasCameraFlash = false;
+//    private boolean hasCameraFlash = false;
     private boolean languageBoolean = false;
     Flash flash = new Flash();
     Translator translator = new Translator();
@@ -49,19 +54,24 @@ public class MainActivity extends AppCompatActivity {
         buttonStop = findViewById(R.id.buttonStop);
         switchLenguage = findViewById(R.id.switchLanguage);
         progressText = findViewById(R.id.progressText);
+        textViewHeading = findViewById(R.id.textViewHeading);
+        inputLabel = findViewById(R.id.inputLabel);
+        morseCodeLabel = findViewById(R.id.morseCodeLabel);
+        progressLabel = findViewById(R.id.progressLabel);
         flash.setCameraManager((CameraManager) getSystemService(Context.CAMERA_SERVICE));
         translator.setMorseCodeView(findViewById(R.id.morseCodeView));
+        setEnglish();
 
         ArrayAdapter<CharSequence>adapter = ArrayAdapter.createFromResource(this, R.array.speedModifiers, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
-        hasCameraFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        //doest work
+//        hasCameraFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
         input = findViewById(R.id.input);
 
         buttonFlash.setOnClickListener(v -> {
-            if (hasCameraFlash) {
                 if (flash.isRdyForNext() && audio.isRdyForNext()) {
                     flash.setRdyForNext(false);
                     if (languageBoolean) {
@@ -71,12 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     flash.setProgressText(progressText);
                     Thread thread = new Thread(flash);
                     thread.start();
-                }
-            } else {
-                //hasCameraFlash is showing true, when it shoudnt
-                return;
-                //getCzech?
-                //flashing screen
             }
         });
 
@@ -98,12 +102,31 @@ public class MainActivity extends AppCompatActivity {
             audio.stop();
         });
 
-        switchLenguage.setOnClickListener(v -> languageBoolean = !languageBoolean);
+        switchLenguage.setOnClickListener(v -> {
+            languageBoolean = !languageBoolean;
+            if (languageBoolean) {
+                setCzech();
+            } else setEnglish();
+        });
+    }
 
+    private void setEnglish() {
+        textViewHeading.setText("Morse Code Transiver");
+        inputLabel.setText("Your message");
+        buttonFlash.setText("Flash");
+        buttonAudio.setText("Audio");
+        buttonStop.setText("Stop");
+        morseCodeLabel.setText("morse code");
+        progressLabel.setText("progress");
+    }
 
-
-
-
-
+    private void setCzech() {
+        textViewHeading.setText("Vysílač Morseovy Abecedy");
+        inputLabel.setText("Vaše zpráva");
+        buttonFlash.setText("Světlo");
+        buttonAudio.setText("Zvuk");
+        buttonStop.setText("Zastavit");
+        morseCodeLabel.setText("morseova abeceda");
+        progressLabel.setText("postup");
     }
 }

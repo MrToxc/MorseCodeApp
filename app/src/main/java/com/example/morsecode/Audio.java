@@ -103,6 +103,7 @@ public class Audio implements Runnable {
                     canBePlayed = false;
                 }
             }
+            //This is also from chatGPT
             if (canBePlayed) {
                 int numSamples = (int) (duration * sampleRate);
                 byte[] generatedSnd = new byte[2 * numSamples];

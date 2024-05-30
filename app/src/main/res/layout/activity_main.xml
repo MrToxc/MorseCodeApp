@@ -86,7 +86,7 @@
         android:layout_width="274dp"
         android:layout_height="47dp"
         android:layout_marginTop="44dp"
-        android:text="Morse Code Transiver"
+        android:text="Morse code transmitter"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#673AB7"
         android:textStyle="bold"

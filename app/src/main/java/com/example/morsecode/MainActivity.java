@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setEnglish() {
-        textViewHeading.setText("Morse Code Transiver");
+        textViewHeading.setText("Morse code transmitter");
         inputLabel.setText("Your message");
         buttonFlash.setText("Flash");
         buttonAudio.setText("Audio");
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setCzech() {
-        textViewHeading.setText("Vysílač Morseovy Abecedy");
+        textViewHeading.setText("Vysílač morseovy abecedy");
         inputLabel.setText("Vaše zpráva");
         buttonFlash.setText("Světlo");
         buttonAudio.setText("Zvuk");

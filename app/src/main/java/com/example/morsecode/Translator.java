@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-//This class is used to translate letters into morse code
+/**
+ * This class is used to translate letters into morse code
+ */
 public class Translator {
     HashMap<Character, List<MorseCodeSymbols>> hashMap = new HashMap<>();
     private TextView morseCodeView;
@@ -16,6 +18,9 @@ public class Translator {
         this.morseCodeView = morseCodeView;
     }
 
+    /**
+     * This constructor loads the translator with letters on one side and morse code symbols on the other
+     */
     public Translator() {
         hashMap.put('a', List.of(MorseCodeSymbols.DOT, MorseCodeSymbols.LINE));
         hashMap.put('b', List.of(MorseCodeSymbols.LINE, MorseCodeSymbols.DOT, MorseCodeSymbols.DOT, MorseCodeSymbols.DOT));
@@ -63,35 +68,38 @@ public class Translator {
         return hashMap;
     }
 
+    /**
+     * This method takes String as an input and turns it into Arraylist with Morse code symbols
+     * @param inputMessage
+     * @return
+     */
     public ArrayList<MorseCodeSymbols> stringToMorseCode(final String inputMessage) {
-
-
         ArrayList<MorseCodeSymbols> morseCode = new ArrayList<>();
         char[] arrayInput = inputMessage.toLowerCase().toCharArray();
-        for (int i = 0; i < arrayInput.length; i++) {
-            morseCode.addAll(Objects.requireNonNull(hashMap.get(arrayInput[i])));
+        char[] finalArray = new char[100];
+        if (arrayInput.length > 100) {
+            for (int i = 0; i < 100; i++) {
+            finalArray[i] = arrayInput[i];
+            }
+        } else finalArray = arrayInput;
+        for (int i = 0; i < finalArray.length; i++) {
+            morseCode.addAll(Objects.requireNonNull(hashMap.get(finalArray[i])));
 
-
-
-
-
-// if it works, don't touch it
-// sorry for this, there is probably smarter way to do this but I am just too tired
-                if (i == 0 && i < arrayInput.length-1) {
-                    if (arrayInput[i] != ' ' && arrayInput[i] != '.' && arrayInput[i + 1] != ' ' && arrayInput[i + 1] != '.') {
-                        morseCode.add(MorseCodeSymbols.SEPARATOR);
-                    }
-                } else if (i > 0 && i < arrayInput.length-1) {
-                    if (arrayInput[i] != ' ' && arrayInput[i] != '.' && arrayInput[i + 1] != ' ' && arrayInput[i + 1] != '.' ) {
-                        morseCode.add(MorseCodeSymbols.SEPARATOR);
-                    }
-                } else if (i > 0 && i > arrayInput.length - 1) {
-                    if (arrayInput[i] != ' ' && arrayInput[i] != '.' && arrayInput[i - 1] != ' ' && arrayInput[i - 1] != '.') {
-                        morseCode.add(MorseCodeSymbols.SEPARATOR);
-                    }
-                } else if (i > 0 && (arrayInput[i-1] == '.' || arrayInput[i-1] == ' ')) {
-                        morseCode.add(MorseCodeSymbols.SEPARATOR);
+            if (i == 0 && i < finalArray.length-1) {
+                if (finalArray[i] != ' ' && finalArray[i] != '.' && finalArray[i + 1] != ' ' && finalArray[i + 1] != '.') {
+                    morseCode.add(MorseCodeSymbols.SEPARATOR);
                 }
+            } else if (i > 0 && i < finalArray.length-1) {
+                if (finalArray[i] != ' ' && finalArray[i] != '.' && finalArray[i + 1] != ' ' && finalArray[i + 1] != '.' ) {
+                    morseCode.add(MorseCodeSymbols.SEPARATOR);
+                }
+            } else if (i > 0 && i > finalArray.length-1) {
+                if (finalArray[i] != ' ' && finalArray[i] != '.' && finalArray[i - 1] != ' ' && finalArray[i - 1] != '.') {
+                    morseCode.add(MorseCodeSymbols.SEPARATOR);
+                }
+            } else if (i > 0 && (finalArray[i-1] == '.' || finalArray[i-1] == ' ')) {
+                    morseCode.add(MorseCodeSymbols.SEPARATOR);
+            }
 
 
         }

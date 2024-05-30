@@ -7,6 +7,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * This class is used to play morse code via camera flash.
+ * It also writes progress on screen
+ * Before running the flashMessage() method, following variables need to be specified:
+ * speedDivider - Through Setter
+ * startingDotLength - Through Constants class
+ * progressText - Through setter
+ * cameraManager - Through setter
+ * arrayList - Through setter
+ */
+
 public class Flash implements Runnable {
     private CameraManager cameraManager;
     private TextView progressText;
@@ -40,6 +51,10 @@ public class Flash implements Runnable {
         this.cameraManager = cameraManager;
     }
 
+    /**
+     * Method used to flash message. It is using arrayList of morseCodeSymbols as input
+     * @throws InterruptedException
+     */
     public void flashMessage() throws InterruptedException {
         stopped = false;
         int statingDotLength = Constants.dotLengthMs;

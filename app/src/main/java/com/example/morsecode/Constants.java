@@ -1,5 +1,8 @@
 package com.example.morsecode;
 
+/**
+ * This class is just used for constants.
+ */
 public class Constants {
 
 

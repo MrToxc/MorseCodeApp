@@ -7,8 +7,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * This class is used to play morse code via audio.
+ * It also writes progress on screen
+ * Before running the playTone() method, following variables need to be specified:
+ * speedDivider - Through Setter
+ * startingDotLength - Through Constants class
+ * progressText - Through setter
+ * arrayList - Through setter
+ */
+
 public class Audio implements Runnable {
-    final double statingDotLength = Constants.dotLengthS;
+    final double startingDotLength = Constants.dotLengthS;
     private ArrayList<MorseCodeSymbols> morseCode = new ArrayList<>();
     private int speedDivider;
     private boolean rdyForNext = true;
@@ -35,9 +45,13 @@ public class Audio implements Runnable {
         this.morseCode = morseCode;
     }
 
+    /**
+     * Method used to flash message. It is using arrayList of morseCodeSymbols as input
+     * @throws InterruptedException
+     */
     public void playTone() throws InterruptedException {
         stopped = false;
-        double dotLength = statingDotLength / speedDivider;
+        double dotLength = startingDotLength / speedDivider;
         double linelength = dotLength * 3;
         double separatorLength = linelength * 1000;
         double spaceLength = dotLength * 7 * 1000;
@@ -60,8 +74,6 @@ public class Audio implements Runnable {
         // Sine wave parameters
                 double duration = 0; // seconds
                 double freqOfTone = Constants.frequency; // Frequency (Hz)
-
-
 
         progressText.setText("");
         for (int l = 0; l < morseCode.size(); l++) {

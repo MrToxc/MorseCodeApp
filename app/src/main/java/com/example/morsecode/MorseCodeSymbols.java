@@ -2,6 +2,11 @@ package com.example.morsecode;
 
 import androidx.annotation.NonNull;
 
+/**
+ * ENUM with all morse code symbols needed.
+ * Also includes their toString();
+ */
+
 public enum MorseCodeSymbols {
     DOT("."), LINE("-"), SEPARATOR("|"), SPACE("||"), PERIOD("|||");
 

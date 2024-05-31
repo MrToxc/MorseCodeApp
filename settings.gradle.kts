@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MorseCode"
 include(":app")
+include(":lib")

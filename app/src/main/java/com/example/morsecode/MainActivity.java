@@ -2,7 +2,9 @@ package com.example.morsecode;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         spinner = findViewById(R.id.spinner);
         buttonFlash = findViewById(R.id.buttonFlash);
         buttonAudio = findViewById(R.id.buttonAudio);
@@ -66,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinner.setAdapter(adapter);
 
-        //doest work
-//        hasCameraFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+
 
         input = findViewById(R.id.input);
 
